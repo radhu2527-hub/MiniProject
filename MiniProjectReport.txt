@@ -1,0 +1,167 @@
+# Library Management System
+
+## 1. Project Overview
+
+The **Library Management System** is a console-based Python application developed using **Python** and **SQLite3**. The system automates common library operations such as member registration, book management, issuing and returning books, fine calculation, and book requests. It supports two roles: **Admin** and **Member (Teacher/Student)**.
+
+This project is designed as a **mini-project** for academic purposes and follows proper database normalization, exception handling, and modular programming practices.
+
+---
+
+## 2. Objectives
+
+* To manage library books efficiently
+* To maintain member and admin records
+* To automate book issue, return, and fine calculation
+* To restrict members to a maximum of 3 issued books
+* To block book requests if unpaid fine exceeds ₹300
+* To provide genre-based book search
+
+---
+
+## 3. Technologies Used
+
+* **Programming Language:** Python 3
+* **Database:** SQLite3
+* **Libraries Used:**
+
+  * `sqlite3` – database operations
+  * `datetime` – date and fine calculations
+  * `tabulate` – formatted table display
+
+---
+
+## 4. User Roles
+
+### Admin
+
+* Add, edit, delete books
+* View all members
+* View and approve book requests
+* Issue books
+* View fine details of all members
+
+### Member (Teacher / Student)
+
+* Register and login
+* View available books
+* Search books by title or genre
+* Request books
+* View issued books
+* Return books
+* View and pay fines
+* View Available Genre
+* View Available Books in a particular genre
+
+---
+
+## 5. Database Schema
+
+### 5.1 Member Table
+
+| Field     | Type         | Description       |
+| --------- | ------------ | ----------------- |
+| Member_id | INTEGER (PK) | Unique member ID  |
+| Name      | TEXT         | Member name       |
+| Email     | TEXT         | Email address     |
+| Phone     | TEXT         | Contact number    |
+| Role      | TEXT         | Teacher / Student |
+| JoinDate  | DATE         | Registration date |
+
+---
+
+### 5.2 Users Table
+
+| Field    | Type         | Description    |
+| -------- | ------------ | -------------- |
+| User_id  | INTEGER (PK) | Login user ID  |
+| Username | TEXT         | Login username |
+| Password | TEXT         | Login password |
+| Role     | TEXT         | Admin / Member |
+
+---
+
+### 5.3 Books Table
+
+| Field            | Type         | Description      |
+| ---------------- | ------------ | ---------------- |
+| Book_id          | INTEGER (PK) | Book identifier  |
+| Title            | TEXT         | Book title       |
+| Author           | TEXT         | Author name      |
+| Publisher        | TEXT         | Publisher        |
+| Genre            | TEXT         | Book genre       |
+| Year             | INTEGER      | Published year   |
+| Total_copies     | INTEGER      | Total copies     |
+| Available_copies | INTEGER      | Available copies |
+
+---
+
+### 5.4 Issued_Books Table
+
+| Field       | Type         | Description     |
+| ----------- | ------------ | --------------- |
+| Issue_id    | INTEGER (PK) | Issue record ID |
+| Member_id   | INTEGER (FK) | Member ID       |
+| Book_id     | INTEGER (FK) | Book ID         |
+| Issue_date  | DATE         | Issue date      |
+| Due_date    | DATE         | Due date        |
+| Return_date | DATE         | Return date     |
+
+---
+
+### 5.5 Fine_Table
+
+| Field    | Type         | Description   |
+| -------- | ------------ | ------------- |
+| Fine_id  | INTEGER (PK) | Fine ID       |
+| Issue_id | INTEGER (FK) | Issue ID      |
+| Amount   | INTEGER      | Fine amount   |
+| Status   | TEXT         | Paid / Unpaid |
+
+---
+
+### 5.6 Book_Request Table
+
+| Field        | Type         | Description        |
+| ------------ | ------------ | ------------------ |
+| Request_id   | INTEGER (PK) | Request ID         |
+| Title        | TEXT         | Requested book     |
+| Member_id    | INTEGER (FK) | Member ID          |
+| Request_date | DATE         | Request date       |
+| Status       | TEXT         | Pending / Approved |
+
+---
+
+```
+
+**Relationships:**
+
+* One Member can issue many Books
+* One Book can be issued many times
+* One Issue record can have one Fine
+* One Member can make many Book Requests
+
+---
+
+## 7. Business Rules Implemented
+
+* Maximum 3 books can be issued to a member at a time
+* Fine is calculated at ₹10 per day after due date
+* Book request is rejected if unpaid fine exceeds ₹300
+* Available copies are automatically updated on issue/return
+
+---
+
+## 8. Exception Handling
+
+* Database errors handled using `try-except`
+* Invalid inputs handled gracefully
+* Prevents duplicate admin insertion
+
+---
+
+## 9. Conclusion
+
+This Library Management System successfully automates essential library functions using Python and SQLite. It demonstrates effective use of database design, exception handling, and role-based access. The project is scalable and can be enhanced further with a GUI or web interface.
+
+---
